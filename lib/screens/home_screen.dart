@@ -11,11 +11,13 @@ import 'package:safepulse/widgets/sos_button.dart';
 import '../services/sos_service.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> {
   Position? _currentPosition;
   String _currentAddress = "Fetching location...";
   final SOSService _sosService = SOSService();
@@ -30,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _getCurrentLocation() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please enable location services.")),
       );
@@ -40,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.deniedForever) {
+        if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("Location permissions are permanently denied."),
@@ -50,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     Position position = await Geolocator.getCurrentPosition(
+      // Deprecated desiredAccuracy replaced with settings parameter in newer versions
       desiredAccuracy: LocationAccuracy.high,
     );
 
@@ -71,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       }
     } catch (e) {
-      print("Error fetching address: $e");
+      // Removed print statement
       setState(() {
         _currentAddress = "Unable to fetch address";
       });
@@ -140,10 +145,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder:
-                                (context) => LiveLocationPage(
-                                  position: _currentPosition,
-                                ),
+                            builder: (context) => LiveLocationPage(
+                              position: _currentPosition,
+                            ),
                           ),
                         );
                       } else {

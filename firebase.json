@@ -1,1 +1,47 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"safepulse-5b336","appId":"1:222500889289:android:c8d14842a27b0423e62318","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"safepulse-5b336","configurations":{"android":"1:222500889289:android:c8d14842a27b0423e62318","ios":"1:222500889289:ios:c14b969eb064b99be62318","web":"1:222500889289:web:6303a34b0058bfa1e62318"}}}}},"functions":[{"source":"functions","codebase":"default","ignore":["node_modules",".git","firebase-debug.log","firebase-debug.*.log","*.local"],"predeploy":["npm --prefix \"$RESOURCE_DIR\" run lint"]}]}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "safepulse-5b336",
+          "appId": "1:222500889289:android:c8d14842a27b0423e62318",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "safepulse-5b336",
+          "configurations": {
+            "android": "1:222500889289:android:c8d14842a27b0423e62318",
+            "ios": "1:222500889289:ios:c14b969eb064b99be62318",
+            "web": "1:222500889289:web:6303a34b0058bfa1e62318"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint"
+      ]
+    }
+  ],
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

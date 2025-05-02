@@ -4,11 +4,13 @@ import 'home_screen.dart';
 import 'notification_screen.dart';
 
 class BottomNavScreen extends StatefulWidget {
+  const BottomNavScreen({Key? key}) : super(key: key);
+
   @override
-  _BottomNavScreenState createState() => _BottomNavScreenState();
+  BottomNavScreenState createState() => BottomNavScreenState();
 }
 
-class _BottomNavScreenState extends State<BottomNavScreen> {
+class BottomNavScreenState extends State<BottomNavScreen> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController();
 

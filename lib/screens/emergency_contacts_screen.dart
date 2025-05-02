@@ -4,18 +4,19 @@ import 'package:safepulse/screens/bottom_navigation_bar.dart';
 
 class EmergencyContactScreen extends StatefulWidget {
   final String userId;
-  EmergencyContactScreen({required this.userId});
+  const EmergencyContactScreen({Key? key, required this.userId}) : super(key: key);
 
   @override
-  _EmergencyContactScreenState createState() => _EmergencyContactScreenState();
+  EmergencyContactScreenState createState() => EmergencyContactScreenState();
 }
 
-class _EmergencyContactScreenState extends State<EmergencyContactScreen> {
+class EmergencyContactScreenState extends State<EmergencyContactScreen> {
   final TextEditingController _contactController = TextEditingController();
   List<String> contacts = [];
 
   void saveContacts() async {
     if (contacts.isEmpty) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please add at least one emergency contact.")),
       );
@@ -27,8 +28,9 @@ class _EmergencyContactScreenState extends State<EmergencyContactScreen> {
         .doc(widget.userId)
         .update({"emergencyContacts": contacts});
 
-    print("✅ Emergency Contacts Saved!");
+    // Removed print statement
 
+    if (!mounted) return;
     // Navigate to Home Screen
     Navigator.pushReplacement(
       context,

@@ -8,11 +8,13 @@ import 'package:safepulse/widgets/custom_loading.dart';
 import 'package:safepulse/screens/register_screen.dart'; // Register Page
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -122,13 +124,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                 ),
-                                child:
-                                    isLoading
-                                        ? CustomLoadingAnimation()
-                                        : Text(
-                                          "Sign In",
-                                          style: AppTextStyles.sosButtonText,
-                                        ),
+                                child: isLoading
+                                    ? CustomLoadingAnimation()
+                                    : Text(
+                                        "Sign In",
+                                        style: AppTextStyles.sosButtonText,
+                                      ),
                               ),
                             ),
                             SizedBox(height: 20),
@@ -147,17 +148,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder:
-                                              (context) => RegisterScreen(),
+                                          builder: (context) => RegisterScreen(),
                                         ),
                                       );
                                     },
                                     child: Text(
                                       "Sign up",
-                                      style: AppTextStyles.sosButtonText
-                                          .copyWith(
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                      style: AppTextStyles.sosButtonText.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ],

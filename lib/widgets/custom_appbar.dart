@@ -5,11 +5,13 @@ import 'package:safepulse/screens/profile_screen.dart';
 import '../utils/app_text_styles.dart';
 
 class CustomAppBar extends StatefulWidget {
+  const CustomAppBar({Key? key}) : super(key: key);
+
   @override
-  _CustomAppBarState createState() => _CustomAppBarState();
+  CustomAppBarState createState() => CustomAppBarState();
 }
 
-class _CustomAppBarState extends State<CustomAppBar> {
+class CustomAppBarState extends State<CustomAppBar> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String username = "User";
@@ -26,6 +28,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   void _fetchUserData() async {
     String? userId = _auth.currentUser?.uid;
     if (userId == null) {
+      if (!mounted) return;
       setState(() {
         isLoading = false;
       });
@@ -36,6 +39,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
       DocumentSnapshot userDoc =
           await _firestore.collection('users').doc(userId).get();
       if (userDoc.exists) {
+        if (!mounted) return;
         setState(() {
           username = userDoc['name'] ?? "User"; // Fetch username
           profileImage = userDoc['profileImage']; // Fetch profile pic
@@ -43,7 +47,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
         });
       }
     } catch (e) {
-      print("Error fetching user data: $e");
+      // Removed print statement
+      if (!mounted) return;
       setState(() {
         isLoading = false;
       });
