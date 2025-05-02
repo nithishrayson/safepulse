@@ -8,11 +8,13 @@ import 'package:safepulse/widgets/custom_loading.dart';
 import 'package:safepulse/widgets/success_page.dart';
 
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
+
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  RegisterScreenState createState() => RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class RegisterScreenState extends State<RegisterScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -59,28 +61,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
         "createdAt": FieldValue.serverTimestamp(),
       });
 
-      print("✅ User Registered: $userId");
+      // Removed print statement
 
+      if (!mounted) return;
       // Navigate to the Success Screen first
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder:
-              (context) => SuccessScreen(
-                userId: userId,
-                message: "Account created successfully!", // Provide a message
-              ),
+          builder: (context) => SuccessScreen(
+            userId: userId,
+            message: "Account created successfully!", // Provide a message
+          ),
         ),
       );
     } catch (e) {
       _showErrorDialog("Registration failed. Please try again.");
-      print("❌ Registration Error: $e");
+      // Removed print statement
     }
 
     setState(() => isLoading = false);
   }
 
   void _showErrorDialog(String message) {
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message, style: TextStyle(color: Colors.white)),
@@ -196,13 +199,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                 ),
-                                child:
-                                    isLoading
-                                        ? CustomLoadingAnimation()
-                                        : Text(
-                                          "Sign Up",
-                                          style: AppTextStyles.sosButtonText,
-                                        ),
+                                child: isLoading
+                                    ? CustomLoadingAnimation()
+                                    : Text(
+                                        "Sign Up",
+                                        style: AppTextStyles.sosButtonText,
+                                      ),
                               ),
                             ),
                             SizedBox(height: 20),

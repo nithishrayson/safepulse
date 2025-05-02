@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "safepulse-2b1f2"
-  }
+    "default": "mangai-8847a",
+    "staging": "mangai-8847a"
+  },
+  "targets": {},
+  "etags": {}
 }

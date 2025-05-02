@@ -16,10 +16,10 @@ class LiveLocationPage extends StatefulWidget {
   LiveLocationPage({Key? key, this.position}) : super(key: key);
 
   @override
-  _LiveLocationPageState createState() => _LiveLocationPageState();
+  LiveLocationPageState createState() => LiveLocationPageState();
 }
 
-class _LiveLocationPageState extends State<LiveLocationPage> {
+class LiveLocationPageState extends State<LiveLocationPage> {
   Position? _position;
   final MapController _mapController = MapController();
   bool _isLoading = true;
@@ -75,7 +75,7 @@ class _LiveLocationPageState extends State<LiveLocationPage> {
 
     try {
       Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
+        locationSettings: LocationSettings(accuracy: LocationAccuracy.high),
       );
 
       setState(() {
@@ -203,14 +203,14 @@ class _LiveLocationPageState extends State<LiveLocationPage> {
                             0,
                             0,
                             0,
-                          ).withOpacity(0.6),
+                          ).withValues(alpha: 153),
                           child: InkWell(
                             splashColor: const Color.fromARGB(
                               255,
                               255,
                               255,
                               255,
-                            ).withOpacity(0.6),
+                            ).withValues(alpha: 153),
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -271,42 +271,40 @@ class _LiveLocationPageState extends State<LiveLocationPage> {
                 borderRadius: BorderRadius.circular(12),
                 child: Container(
                   color: Colors.grey.shade300,
-                  child:
-                      _isLoading
-                          ? Center(child: CustomLoadingAnimation())
-                          : FlutterMap(
-                            mapController: _mapController,
-                            options: MapOptions(
-                              center: LatLng(
-                                _position!.latitude,
-                                _position!.longitude,
-                              ),
-                              zoom: 15.0,
+                  child: _isLoading
+                      ? Center(child: CustomLoadingAnimation())
+                      : FlutterMap(
+                          mapController: _mapController,
+                          options: MapOptions(
+                            center: LatLng(
+                              _position!.latitude,
+                              _position!.longitude,
                             ),
-                            children: [
-                              TileLayer(
-                                urlTemplate:
-                                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                                subdomains: ['a', 'b', 'c'],
-                              ),
-                              MarkerLayer(
-                                markers: [
-                                  Marker(
-                                    point: LatLng(
-                                      _position!.latitude,
-                                      _position!.longitude,
-                                    ),
-                                    builder:
-                                        (ctx) => Icon(
-                                          Icons.location_pin,
-                                          color: Colors.redAccent,
-                                          size: 35,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                            zoom: 15.0,
                           ),
+                          children: [
+                            TileLayer(
+                              urlTemplate:
+                                  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                              subdomains: ['a', 'b', 'c'],
+                            ),
+                            MarkerLayer(
+                              markers: [
+                                Marker(
+                                  point: LatLng(
+                                    _position!.latitude,
+                                    _position!.longitude,
+                                  ),
+                                  builder: (ctx) => Icon(
+                                    Icons.location_pin,
+                                    color: Colors.redAccent,
+                                    size: 35,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                 ),
               ),
             ),
